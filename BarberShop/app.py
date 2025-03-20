@@ -14,4 +14,6 @@ app = Flask(__name__)
 def index():
     return render_template("layout.html")
 
+if __name__ == "__main__":
+    app.run(debug=True, use_reloader=True)
 
