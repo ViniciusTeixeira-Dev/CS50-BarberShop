@@ -6,8 +6,13 @@ from werkzeug.security import check_password_hash, generate_password_hash
 app = Flask(__name__)
 
 # Banco de Dados
-connect = sqlite3.connect("MUDAR AINDA")
-db = connect.cursor()
+#connect = sqlite3.connect("MUDAR AINDA")
+#db = connect.cursor()
 
 
-
+@app.route("/")
+def index():
+    return "Flask está rodando corretamente!"
+    
+if __name__ == "__main__":
+    app.run(debug=True)
