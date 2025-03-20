@@ -12,7 +12,6 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    return "Flask está rodando corretamente!"
-    
-if __name__ == "__main__":
-    app.run(debug=True)
+    return render_template("layout.html")
+
+
