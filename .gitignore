@@ -1,2 +1,3 @@
 venv/
 BarberShop/__pycache__/
+BarberShop/key.env/

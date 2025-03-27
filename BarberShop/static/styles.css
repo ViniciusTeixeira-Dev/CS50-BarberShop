@@ -26,3 +26,68 @@
 .logout-link:hover::after {
     background-color: red;
 }
+
+/* Login / registro */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #f0eded, #3d3939);
+}
+.login-container {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    width: 300px;
+    text-align: center;
+}
+.login-container h2 {
+    margin-bottom: 20px;
+}
+.input-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+.input-group label {
+    display: block;
+    font-weight: bold;
+}
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.login-btn {
+    width: 100%;
+    padding: 10px;
+    background: #6e8efb;
+    border: none;
+    color: white;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.login-btn:hover {
+    background: #5a7be0;
+}
+.register-link {
+    margin-top: 10px;
+    display: block;
+    color: #6e8efb;
+    text-decoration: none;
+}
+.register-link:hover {
+    text-decoration: underline;
+}
