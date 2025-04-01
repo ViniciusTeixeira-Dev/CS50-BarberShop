@@ -1,0 +1,31 @@
+{% extends "layout.html"%}
+
+{% block title %}
+    Registro
+{% endblock %}
+
+{% block main %}
+<div class="container d-flex justify-content-center align-items-center" style="height: 80vh;">
+    <div class="card p-4 shadow-lg" style="width: 350px;">
+        <h2 class="text-center mb-3">Registro</h2>
+         <form action="{{ url_for('register') }}" method="POST" autocomplete="off">
+            <div class="mb-3">
+                <label for="username" class="form-label">Usuário</label>
+                <input type="text" id="username" name="username" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Senha</label>
+                <input type="password" id="password" name="password" class="form-control" required autocomplete="new-password">
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Repita a senha</label>
+                <input type="password" id="password" name="passwordConfirm" class="form-control" required autocomplete="new-password">
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Registrar</button>
+        </form>
+        <div class="text-center mt-3">
+            <a href="/login" class="text-decoration-none">Ja possui uma conta ?</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

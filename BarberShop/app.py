@@ -13,7 +13,6 @@ app.teardown_appcontext(close_db)
 
 
 @app.route("/")
-@login_required
 def index():
     return render_template("layout.html")
 
@@ -35,6 +34,40 @@ def login():
     
     else:
         return render_template("login.html")
+
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+        passwordConfirm = request.form["passwordConfirm"]
+        
+        #Verifica se ja tem um usuario com o mesmo nome
+        db = get_db()
+        user = db.execute("SELECT * FROM users WHERE username = ?", (username,)).fetchone()
+        if user is not None:
+            flash("Este nome ja está em uso", "warning")
+            return redirect("/register")
+
+        #Verifica se as senhas são diferentes
+        if password != passwordConfirm:
+            flash("Senhas não coincidem", "warning")
+            return redirect("/register")
+        
+        #Insere no banco de dados o novo usuario com a senha hasheada(para maior segurança)
+        password = generate_password_hash(password)
+        
+        db = get_db()
+        db.execute("INSERT INTO users (username, password) VALUES (?,?)", (username,password))
+        db.commit()
+        
+        return redirect("/")
+    
+    else:
+        return render_template("register.html")
+
+
+
 
 
 
