@@ -25,6 +25,7 @@ def login():
         db = get_db()
         user = db.execute("SELECT * FROM users WHERE username = ?", (username,)).fetchone()
         
+        #Verifica se o usuario fornecido e senhas são iguais aos do banco de dados
         if user and check_password_hash(user["password"], password):
             session["user_id"] = user["id"]
             return redirect("/")
@@ -57,14 +58,24 @@ def register():
         #Insere no banco de dados o novo usuario com a senha hasheada(para maior segurança)
         password = generate_password_hash(password)
         
-        db = get_db()
         db.execute("INSERT INTO users (username, password) VALUES (?,?)", (username,password))
         db.commit()
+        
+        #Loga o usuario no site
+        user_id = db.execute("SELECT id FROM users WHERE username = ?", (username,)).fetchone()
+        session["user_id"] = user_id["id"]
+    
         
         return redirect("/")
     
     else:
         return render_template("register.html")
+    
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect("/")
+    
 
 
 
