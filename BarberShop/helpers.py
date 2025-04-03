@@ -1,21 +1,23 @@
 from flask import session,redirect,url_for
 from functools import wraps
 from flask import g
+from datetime import datetime,timedelta
+import pytz
 import sqlite3
 
 
 #Configuraçao de banco de dados
 DATABASE = "BarberShop.db"
 
+#Retorna uma conexão com o banco de dados (por requisição)
 def get_db():
-    """Retorna uma conexão com o banco de dados (por requisição)."""
     if 'db' not in g:
         g.db = sqlite3.connect(DATABASE)
         g.db.row_factory = sqlite3.Row  # Retorna dicionários em vez de tuplas
     return g.db
 
+#Fecha a conexão com banco de dados
 def close_db(e=None):
-    """Fecha a conexão com o banco de dados."""
     db = g.pop('db', None)
     if db is not None:
         db.close()
@@ -28,3 +30,26 @@ def login_required(f):
             return redirect(url_for("login"))
         return f(*args, **kwargs)
     return decorated_function
+
+
+#Faz a inserçao dos dias disponiveis a partir do dia atual
+def horariosDisponiveis(user_id):
+    #Pega o horario de Brasilia e define os horarios de trabalho
+    fuso = pytz.timezone('America/Sao_Paulo')  
+    hoje = datetime.now(fuso)
+    horarios = ['08:00','08:30','09:00','09:30','10:00']
+    
+    #Verifica se o dia não é domingo e adiciona no banco de dados os horarios a partir do dia atual
+    for dias in range(7):  
+        data = hoje + timedelta(days=dias)
+        if data.weekday() != 6:  # Domingo = 6 
+            for horario in horarios:
+                
+                # Combina data + horário
+                sql_format = f"{data.strftime('%Y-%m-%d')} {horario}:00"
+                db = get_db()
+                db.execute("INSERT INTO agendamentos (data_hora,user_id) VALUES (?, ?)", (sql_format,user_id))
+            
+            
+            
+    
