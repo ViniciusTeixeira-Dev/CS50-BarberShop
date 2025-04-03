@@ -120,3 +120,98 @@ body {
         padding-top: 0.5rem;
     }
 }
+
+/* ===== AGENDAMENTO ===== */
+.agendamento-container {
+  max-width: 900px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  padding: 20px;
+  margin-top: 20px;
+}
+
+/* Cabeçalho */
+.cabecalho {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.cabecalho h1 {
+  color: #000000;
+}
+
+/* Navegação da Semana */
+.semana-navegacao {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.semana-titulo {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+/* Dias da Semana */
+.dias-semana {
+  display: flex;
+  justify-content: center; /* Centraliza os dias */
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.dia {
+  width: calc(100% / 7); /* Divide igualmente em 7 colunas */
+  text-align: center;
+  padding: 10px;
+  background: #eee;
+  border-radius: 5px;
+  font-weight: bold;
+}
+.dia.hoje {
+  background: #ff6b6b;
+  color: white;
+}
+
+.horarios-disponiveis {
+  display: flex;
+  justify-content: center; /* Centraliza as colunas */
+  gap: 10px;
+}
+.horarios-coluna {
+  width: calc(100% / 7); /* Mesma largura que os dias */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centraliza os botões horizontalmente */
+  gap: 8px;
+}
+.horario-btn {
+  width: 130%; 
+  background: #4CAF50;
+  color: white;
+  border: none;
+  padding: 12px 5px;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 15px;
+  font-weight: bold;
+  transition: all 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 48px;
+  margin: 0 auto;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.horario-btn:hover {
+  background: #45a049;
+  transform: translateY(-2px); /* Efeito de levitar */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15); /* Sombra mais pronunciada no hover */
+}
+
+.horarios-coluna {
+  margin-left: -15px;  /* Empurra a coluna um pouco para a esquerda */
+  margin-right: 5px; /* Compensa o movimento */
+}
+

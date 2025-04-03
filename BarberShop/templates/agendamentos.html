@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block title %}Agendamentos | BarberShop{% endblock %}
+
+{% block main %}
+<div class="agendamento-container">
+  <div class="cabecalho">
+    <h1>BarberShop</h1>
+  </div>
+
+  <!-- Título -->
+  <div class="semana-navegacao">
+    <div class="semana-titulo">
+      Horários Disponíveis
+    </div>
+  </div>
+
+  <!-- Dias da Semana -->
+  <div class="dias-semana">
+    {% for data, horarios in dias_agendamento.items() %}
+    <div class="dia {% if data == hoje %}hoje{% endif %}">
+      <div class="dia-semana">{{ data|format_data_curto }}</div>
+      <div class="dia-data">{{ data.split('-')[2] }}/{{ data.split('-')[1] }}</div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- Horários -->
+  <div class="horarios-disponiveis">
+    {% for data, horarios in dias_agendamento.items() %}
+    <div class="horarios-coluna">
+      {% if horarios %}
+        {% for hora in horarios %}
+        <form action="/reservar" method="post">
+          <input type="hidden" name="data_hora" value="{{ data }} {{ hora }}:00">
+          <button type="submit" class="horario-btn">{{ hora }}</button>
+        </form>
+        {% endfor %}
+      {% else %}
+        <div class="sem-horarios">Indisponível</div>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

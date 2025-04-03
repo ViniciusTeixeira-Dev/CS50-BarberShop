@@ -38,18 +38,31 @@ def horariosDisponiveis(user_id):
     fuso = pytz.timezone('America/Sao_Paulo')  
     hoje = datetime.now(fuso)
     horarios = ['08:00','08:30','09:00','09:30','10:00']
+    disponiveis = []
+    
+    db = get_db()
     
     #Verifica se o dia não é domingo e adiciona no banco de dados os horarios a partir do dia atual
-    for dias in range(7):  
+    for dias in range(8):  
         data = hoje + timedelta(days=dias)
-        if data.weekday() != 6:  # Domingo = 6 
+        if data.weekday() != 6 :  # Domingo = 6 
             for horario in horarios:
-                
-                # Combina data + horário
+                # Combina data + horário e insere no banco de dados
                 sql_format = f"{data.strftime('%Y-%m-%d')} {horario}:00"
-                db = get_db()
-                db.execute("INSERT INTO agendamentos (data_hora,user_id) VALUES (?, ?)", (sql_format,user_id))
+                
+                #Verifica se ja tem o dia no banco de dados
+                existe = db.execute(
+                        "SELECT * FROM agendamentos WHERE data_hora = ? ",
+                        (sql_format,)
+                    ).fetchall()
+                
+                if not existe:
+                
+                    db.execute("INSERT INTO agendamentos (data_hora,user_id) VALUES (?, ?)", (sql_format,user_id))
+           
+    db.commit()
+                
+    #Faz a seleção dos horarios disponiveis a partir do dia atual
+    disponiveis = db.execute("SELECT * FROM agendamentos WHERE data_hora >= ? AND disponivel = TRUE ORDER BY data_hora", (hoje.strftime('%Y-%m-%d 00:00:00'),)).fetchall()
+    return [row['data_hora'] for row in disponiveis]
             
-            
-            
-    
