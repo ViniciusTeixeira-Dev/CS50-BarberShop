@@ -66,3 +66,4 @@ def horariosDisponiveis(user_id):
     disponiveis = db.execute("SELECT * FROM agendamentos WHERE data_hora >= ? AND disponivel = TRUE ORDER BY data_hora", (hoje.strftime('%Y-%m-%d 00:00:00'),)).fetchall()
     return [row['data_hora'] for row in disponiveis]
             
+#Função que pegar

@@ -50,6 +50,15 @@ def agendamentos():
                         hoje=hoje)
     
 
+@app.route("/reservar" method=["GET", "POST"])
+def reservar():
+    if request.method == "POST":
+        
+        
+    else:
+        return render_template
+    
+
 
 
 @app.route("/login", methods=["GET", "POST"])
