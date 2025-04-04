@@ -50,13 +50,21 @@ def agendamentos():
                         hoje=hoje)
     
 
-@app.route("/reservar" method=["GET", "POST"])
+@app.route("/reservar", method=["GET", "POST"])
 def reservar():
     if request.method == "POST":
+        data_hora = request.form["data_hora"]
         
+        if not data_hora:
+            return render_template("agendamentos.html")
+
         
+    
+    
+    
+    
     else:
-        return render_template
+        return render_template("reserva.html")
     
 
 
