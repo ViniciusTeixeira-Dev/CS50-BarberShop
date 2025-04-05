@@ -1,0 +1,23 @@
+{% extends "layout.html"%}
+
+{% block title %} BarberShop | Reservar {% endblock %}
+
+{% block main %}
+<div class="container d-flex justify-content-center align-items-center" style="height: calc(100vh - 70px);">
+    <div class="card p-4 shadow-lg" style="width: 350px;">
+        <h2 class="text-center mb-3">Confirmação Reserva</h2>
+        <form>
+            <div class="mb-1">
+                <label class="form-label">Usuário: {{username}}</label>
+            </div>
+            <div class="mb-1">
+                <label class="form-label">Data: {{data.split('-')[2] }}/{{ data.split('-')[1]}}</label>
+            </div>
+            <div class="mb-1">
+                <label class="form-label">Horario: {{hora}}</label>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Reservar</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

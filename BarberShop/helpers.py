@@ -51,10 +51,7 @@ def horariosDisponiveis(user_id):
                 sql_format = f"{data.strftime('%Y-%m-%d')} {horario}:00"
                 
                 #Verifica se ja tem o dia no banco de dados
-                existe = db.execute(
-                        "SELECT * FROM agendamentos WHERE data_hora = ? ",
-                        (sql_format,)
-                    ).fetchall()
+                existe = db.execute("SELECT * FROM agendamentos WHERE data_hora = ? ",(sql_format,)).fetchall()
                 
                 if not existe:
                 

@@ -1,5 +1,5 @@
 import os
-from flask import Flask, flash, redirect, render_template, request, session
+from flask import Flask, flash, redirect, render_template, request, session,url_for
 from werkzeug.security import check_password_hash, generate_password_hash
 from dotenv import load_dotenv
 from helpers import login_required,get_db,close_db,horariosDisponiveis
@@ -22,50 +22,82 @@ def index():
 @app.route("/agendamento", methods=["GET", "POST"])
 @login_required
 def agendamentos():
-    user_id = session["user_id"]
-    disponiveis = horariosDisponiveis(user_id)
+    if request.method == "POST":
+
+        #Envia formulario para a rota da reserva
+        data_hora = request.form["data_hora"]
+        
+        #Confirma se possui o horario
+        db = get_db()
+        confirm = db.execute("SELECT data_hora FROM agendamentos WHERE data_hora = ?", (data_hora,)).fetchone()
+        if not confirm:
+            flash("Horario Incorreto")
+            return redirect("/agendamentos.html")
+
+        if data_hora:
+            return redirect(url_for('reservar', data_hora=data_hora))
+        return redirect(url_for('agendamentos'))
     
-    # Obtém a data atual com fuso horário correto
-    fuso = pytz.timezone('America/Sao_Paulo')
-    hoje = datetime.now(fuso).strftime('%Y-%m-%d')
+    else:
     
-    # Organiza os horários por dia
-    dias = {}
-    for data_hora in disponiveis:
+        user_id = session["user_id"]
+        disponiveis = horariosDisponiveis(user_id)
+        
+        # Obtém a data atual com fuso horário correto
+        fuso = pytz.timezone('America/Sao_Paulo')
+        hoje = datetime.now(fuso).strftime('%Y-%m-%d')
+        
+        # Organiza os horários por dia
+        dias = {}
+        for data_hora in disponiveis:
+            data = data_hora.split()[0]
+            hora = data_hora.split()[1][:5]
+            
+            if data not in dias:
+                dias[data] = []
+            dias[data].append(hora)
+        
+        # Garante os próximos 7 dias, mesmo sem horários
+        dias_completos = {}
+        for i in range(7):
+            data = (datetime.now(fuso) + timedelta(days=i)).strftime('%Y-%m-%d')
+            dias_completos[data] = dias.get(data, [])
+        
+        return render_template("agendamentos.html", 
+                            dias_agendamento=dias_completos,
+                            hoje=hoje)
+    
+
+
+@app.route("/reservar", methods=["GET", "POST"])
+@login_required
+def reservar():
+
+    #Confira se tem o "data_hora"
+    data_hora = request.form.get("data_hora")
+    if not data_hora:
+        flash("Agende um horario para acessar", "danger")
+        return redirect("/agendamentos")
+    
+    if request.method == "POST":
+        
+        
+        
+        #Puxa no banco de dados o username para exibir no FrontEnd
+        db = get_db()
+        username = (db.execute("SELECT username FROM users WHERE id = ?", (session["user_id"],)).fetchone())["username"]
+
+        #Divide a "data_hora" em dois para exibir no FrontEnd separado
         data = data_hora.split()[0]
         hora = data_hora.split()[1][:5]
         
-        if data not in dias:
-            dias[data] = []
-        dias[data].append(hora)
+        return render_template("reservar.html", username = username, data = data, hora = hora)
     
-    # Garante os próximos 7 dias, mesmo sem horários
-    dias_completos = {}
-    for i in range(7):
-        data = (datetime.now(fuso) + timedelta(days=i)).strftime('%Y-%m-%d')
-        dias_completos[data] = dias.get(data, [])
-    
-    return render_template("agendamentos.html", 
-                        dias_agendamento=dias_completos,
-                        hoje=hoje)
-    
+    if request.method == "GET":
+        flash("Selecione um horario", "danger")
+        return redirect("/ageendamentos")
 
-@app.route("/reservar", method=["GET", "POST"])
-def reservar():
-    if request.method == "POST":
-        data_hora = request.form["data_hora"]
-        
-        if not data_hora:
-            return render_template("agendamentos.html")
 
-        
-    
-    
-    
-    
-    else:
-        return render_template("reserva.html")
-    
 
 
 

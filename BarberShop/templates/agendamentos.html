@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 
-{% block title %} Agendamentos | BarberShop {% endblock %}
+{% block title %}BarberShop | Agendamentos{% endblock %}
 
 {% block main %}
 <div class="agendamento-container">
@@ -31,7 +31,7 @@
     <div class="horarios-coluna">
       {% if horarios %}
         {% for hora in horarios %}
-        <form action="/reservar" method="post">
+        <form action="{{ url_for('reservar') }}" method="post">
           <input type="hidden" name="data_hora" value="{{ data }} {{ hora }}:00">
           <button type="submit" class="horario-btn">{{ hora }}</button>
         </form>
