@@ -6,7 +6,8 @@
 <div class="container d-flex justify-content-center align-items-center" style="height: calc(100vh - 70px);">
     <div class="card p-4 shadow-lg" style="width: 350px;">
         <h2 class="text-center mb-3">Confirmação Reserva</h2>
-        <form>
+        <form method="POST">
+            <input type="hidden" name="data_hora" value="{{ data }} {{ hora }}:00">
             <div class="mb-1">
                 <label class="form-label">Usuário: {{username}}</label>
             </div>

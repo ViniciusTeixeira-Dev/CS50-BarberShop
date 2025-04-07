@@ -69,11 +69,11 @@ def agendamentos():
     
 
 
-@app.route("/reservar", methods=["POST"])
+@app.route("/reservar", methods=["GET","POST"])
 @login_required
 def reservar():
     #Confira se tem o "data_hora"
-    data_hora = request.form.get("data_hora")
+    data_hora = request.form.get("data_hora") or request.args.get("data_hora")
     if not data_hora:
         flash("Agende um horario para acessar", "danger")
         return redirect("/agendamento")
@@ -89,7 +89,7 @@ def reservar():
                 return redirect("/agendamento")
         
         #Faz a reserva com os dados do usuario
-        db.execute("INSERT INTO agendamentos (data_hora, user_id) VALUES (?, ?, 0)",(data_hora, session["user_id"],))
+        db.execute("UPDATE agendamentos SET user_id = ?, disponivel = 0 WHERE data_hora = ? AND disponivel = 1", (session["user_id"], data_hora))
         db.commit()
         return redirect("/reservas")
     

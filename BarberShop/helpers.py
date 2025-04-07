@@ -51,11 +51,12 @@ def horariosDisponiveis(user_id):
                 sql_format = f"{data.strftime('%Y-%m-%d')} {horario}:00"
                 
                 #Verifica se ja tem o dia no banco de dados
-                existe = db.execute("SELECT * FROM agendamentos WHERE data_hora = ? ",(sql_format,)).fetchall()
+                existe = db.execute("SELECT * FROM agendamentos WHERE data_hora = ?", [sql_format,]).fetchall()
                 
                 if not existe:
                 
-                    db.execute("INSERT INTO agendamentos (data_hora,user_id) VALUES (?, ?)", (sql_format,user_id))
+                    db.execute("INSERT INTO agendamentos (data_hora) VALUES (?)", [sql_format])
+                    
            
     db.commit()
                 
@@ -63,4 +64,3 @@ def horariosDisponiveis(user_id):
     disponiveis = db.execute("SELECT * FROM agendamentos WHERE data_hora >= ? AND disponivel = TRUE ORDER BY data_hora", (hoje.strftime('%Y-%m-%d 00:00:00'),)).fetchall()
     return [row['data_hora'] for row in disponiveis]
             
-#Função que pegar
