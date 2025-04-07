@@ -69,33 +69,40 @@ def agendamentos():
     
 
 
-@app.route("/reservar", methods=["GET", "POST"])
+@app.route("/reservar", methods=["POST"])
 @login_required
 def reservar():
-
     #Confira se tem o "data_hora"
     data_hora = request.form.get("data_hora")
     if not data_hora:
         flash("Agende um horario para acessar", "danger")
-        return redirect("/agendamentos")
+        return redirect("/agendamento")
     
-    if request.method == "POST":
-        
-        
-        
-        #Puxa no banco de dados o username para exibir no FrontEnd
+    if "confirmado" in request.form:
         db = get_db()
-        username = (db.execute("SELECT username FROM users WHERE id = ?", (session["user_id"],)).fetchone())["username"]
-
-        #Divide a "data_hora" em dois para exibir no FrontEnd separado
-        data = data_hora.split()[0]
-        hora = data_hora.split()[1][:5]
+        #Verifica se está disponivel
+        horario_disponivel = db.execute(
+                "SELECT id FROM agendamentos WHERE data_hora = ? AND disponivel = 1",(data_hora,)).fetchone()
+            
+        if not horario_disponivel:
+                flash("Horário já reservado", "danger")
+                return redirect("/agendamento")
         
-        return render_template("reservar.html", username = username, data = data, hora = hora)
+        #Faz a reserva com os dados do usuario
+        db.execute("INSERT INTO agendamentos (data_hora, user_id) VALUES (?, ?, 0)",(data_hora, session["user_id"],))
+        db.commit()
+        return redirect("/reservas")
     
-    if request.method == "GET":
-        flash("Selecione um horario", "danger")
-        return redirect("/ageendamentos")
+
+    #Puxa no banco de dados o username para exibir no FrontEnd
+    db = get_db()
+    username = (db.execute("SELECT username FROM users WHERE id = ?", (session["user_id"],)).fetchone())["username"]
+
+    #Divide a "data_hora" em dois para exibir no FrontEnd separado
+    data = data_hora.split()[0]
+    hora = data_hora.split()[1][:5]
+    return render_template("reservar.html", username = username, data = data, hora = hora)
+        
 
 
 

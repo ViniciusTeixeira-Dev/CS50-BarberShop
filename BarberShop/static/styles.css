@@ -265,6 +265,10 @@ footer {
   border-top: 1px solid #374151;
 }
 
+.sem-horarios {
+  font-weight: bold;
+}
+
 /* ===== Reservar ===== */
 
 .mb-1 {
