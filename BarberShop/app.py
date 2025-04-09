@@ -110,6 +110,7 @@ def reservar():
 
 
 @app.route("/minhasReservas")
+@login_required
 def minhasReservas():
     db = get_db()
     reservas = db.execute("SELECT id, data_hora  FROM agendamentos WHERE user_id = ? AND disponivel = 0", [session["user_id"]]).fetchall()
