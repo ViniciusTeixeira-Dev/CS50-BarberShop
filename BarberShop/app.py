@@ -14,9 +14,12 @@ app.secret_key = os.getenv("SECRET_KEY", "devkey123") # chave temporaria se não
 # Fechar o banco automaticamente ao final da requisição
 app.teardown_appcontext(close_db)
 
+
+
 @app.route("/")
 def index():
     return render_template("layout.html")
+
 
 
 @app.route("/agendamento", methods=["GET", "POST"])
@@ -66,7 +69,7 @@ def agendamentos():
         return render_template("agendamentos.html", 
                             dias_agendamento=dias_completos,
                             hoje=hoje)
-    
+
 
 
 @app.route("/reservar", methods=["GET","POST"])
@@ -91,7 +94,7 @@ def reservar():
         #Faz a reserva com os dados do usuario
         db.execute("UPDATE agendamentos SET user_id = ?, disponivel = 0 WHERE data_hora = ? AND disponivel = 1", (session["user_id"], data_hora))
         db.commit()
-        return redirect("/reservas")
+        return redirect("/minhasReservas")
     
 
     #Puxa no banco de dados o username para exibir no FrontEnd
@@ -102,10 +105,24 @@ def reservar():
     data = data_hora.split()[0]
     hora = data_hora.split()[1][:5]
     return render_template("reservar.html", username = username, data = data, hora = hora)
+
+
+
+@app.route("/minhasReservas")
+def minhasReservas():
+    db = get_db()
+    reservas = db.execute("SELECT id, data_hora  FROM agendamentos WHERE user_id = ? AND disponivel = 0", [session["user_id"]]).fetchall()
+    return render_template("horariosAgendados.html", reservas=reservas)
+
+
+
+@app.route("/cancelar-reserva", methods=["POST"])
+@login_required
+def cancelar_reserva():
+    reserva_id = request.form.get("reserva_id")
+    # Lógica para cancelamento
+    return redirect("/minhasReservas")
         
-
-
-
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -127,6 +144,7 @@ def login():
     
     else:
         return render_template("login.html")
+
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -164,11 +182,15 @@ def register():
     else:
         return render_template("register.html")
     
+
+
 @app.route("/logout")
 @login_required
 def logout():
     session.clear()
     return redirect("/")
+
+
 
 @app.template_filter('format_data_curto')
 def format_data_curto(data_str):

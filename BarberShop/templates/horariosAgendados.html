@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block title %}BarberShop | Minhas Reservas{% endblock %}
+
+{% block main %}
+<div class="reservas-container compact-view">
+  <div class="cabecalho">
+    <h1>Minhas Reservas</h1>
+    <h5>Evite cancelar encima da hora !</h5>
+  </div>
+
+  <div class="tabela-reservas-wrapper">
+    <table class="tabela-reservas">
+      <thead>
+        <tr>
+          <th class="col-data">Data</th>
+          <th class="col-horario">Horário</th>
+          <th class="col-acoes">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for reserva in reservas %}
+        <tr>
+          <td>{{ reserva.data_hora.split()[0].split('-')[2] }}/{{ reserva.data_hora.split()[0].split('-')[1] }}</td>
+          <td>{{ reserva.data_hora.split()[1][:5] }}</td>
+          <td>
+            <form action="{{ url_for('cancelar_reserva') }}" method="post">
+              <input type="hidden" name="reserva_id" value="{{ reserva.id }}">
+              <button type="submit" class="btn-cancelar">Cancelar</button>
+            </form>
+          </td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="3" class="sem-reservas">Nenhuma reserva encontrada</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
