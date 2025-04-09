@@ -94,6 +94,7 @@ def reservar():
         #Faz a reserva com os dados do usuario
         db.execute("UPDATE agendamentos SET user_id = ?, disponivel = 0 WHERE data_hora = ? AND disponivel = 1", (session["user_id"], data_hora))
         db.commit()
+        flash("Horario reservado com sucesso !", "success")
         return redirect("/minhasReservas")
     
 
