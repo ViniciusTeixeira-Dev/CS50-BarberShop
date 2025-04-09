@@ -120,7 +120,12 @@ def minhasReservas():
 @login_required
 def cancelar_reserva():
     reserva_id = request.form.get("reserva_id")
+    
     # Lógica para cancelamento
+    db = get_db()
+    db.execute("UPDATE agendamentos SET disponivel = 1 WHERE id = ?", (reserva_id,))
+    db.commit()
+    
     return redirect("/minhasReservas")
         
 
