@@ -1,3 +1,31 @@
+# Barber Shop - Scheduling System ✂️
+
+## 🇺🇸 English Version
+
+### Video Demo: https://youtu.be/9ICc9NfPXbg
+
+### Key Features
+🔐 **User System**: Password-protected accounts  
+📅 **Scheduling**: Real-time booking  
+
+### Technologies
+⌨️ **Backend**: Python + Flask  
+🗃️ **Database**: SQLite  
+💄 **Frontend**: Basic HTML/CSS  
+🔐 **Security**: Password hashing, session protection
+
+### Setup
+1. Install Python 3.10+
+2. Clone repo: `git clone https://github.com/ViniciusTeixeira-Dev/CS50-BarberShop/tree/main`
+3. Create virtual env: `python -m venv venv`
+4. Activate it:
+   - Windows: `venv\Scripts\activate`
+   - Linux/Mac: `source venv/bin/activate`
+5. Install dependencies: `pip install -r requirements.txt`
+6. Run: `flask run`
+
+----------------------------------------------------------------------
+
 # Barber Shop - Sistema de Agendamento ✂️
 
 ## 🇧🇷 Versão em Português
@@ -25,30 +53,5 @@
 6. Execute: `flask run`
 
 ----------------------------------------------------------------------
-# Barber Shop - Scheduling System ✂️
 
-## 🇺🇸 English Version
 
-### Video Demo: https://youtu.be/9ICc9NfPXbg
-
-### Key Features
-🔐 **User System**: Password-protected accounts  
-📅 **Scheduling**: Real-time booking  
-
-### Technologies
-⌨️ **Backend**: Python + Flask  
-🗃️ **Database**: SQLite  
-💄 **Frontend**: Basic HTML/CSS  
-🔐 **Security**: Password hashing, session protection
-
-### Setup
-1. Install Python 3.10+
-2. Clone repo: `git clone https://github.com/ViniciusTeixeira-Dev/CS50-BarberShop/tree/main`
-3. Create virtual env: `python -m venv venv`
-4. Activate it:
-   - Windows: `venv\Scripts\activate`
-   - Linux/Mac: `source venv/bin/activate`
-5. Install dependencies: `pip install -r requirements.txt`
-6. Run: `flask run`
-
-*Desenvolvido por Vinicius De Araujo Teixeira / Developed by Vinicius De Araujo Teixeira*
