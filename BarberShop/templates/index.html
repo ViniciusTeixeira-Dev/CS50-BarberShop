@@ -1,0 +1,165 @@
+{% extends "layout.html" %}
+
+{% block title %}Início | BarberShop{% endblock %}
+
+{% block main %}
+<!-- Hero Section -->
+<section class="hero-section py-5">
+  <div class="container py-5">
+    <div class="row align-items-center">
+      <div class="col-lg-6 mb-4 mb-lg-0">
+        <h1 class="display-4 fw-bold mb-3">Estilo que <span class="text-primary">fala por você</span></h1>
+        <p class="lead mb-4">Na BarberShop, transformamos cortes de cabelo e barba em obras de arte. Agende seu horário e descubra a diferença de um atendimento profissional.</p>
+        <div class="d-flex gap-3">
+          <a href="/agendamento" class="btn btn-primary btn-lg px-4">Agendar Horário</a>
+          {% if not session.user_id %}
+          <a href="/register" class="btn btn-outline-light btn-lg px-4">Criar Conta</a>
+          {% endif %}
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" 
+             alt="Barbeiro profissional trabalhando" 
+             class="img-fluid rounded-3 shadow-lg border border-secondary">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Serviços -->
+<section class="services-section py-5 bg-dark">
+  <div class="container py-4">
+    <h2 class="text-center mb-5 fw-bold">Nossos <span class="text-primary">Serviços</span></h2>
+    
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="card h-100 border-secondary bg-gray-800">
+          <div class="card-body text-center p-4">
+            <div class="mb-3">
+              <i class="fas fa-cut fa-3x text-primary"></i>
+            </div>
+            <h3 class="h4 mb-3">Corte Premium</h3>
+            <p class="mb-0">Corte de cabelo com técnicas profissionais e acabamento perfeito para seu estilo.</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-4">
+        <div class="card h-100 border-secondary bg-gray-800">
+          <div class="card-body text-center p-4">
+            <div class="mb-3">
+              <i class="fas fa-air-freshener fa-3x text-primary"></i>
+            </div>
+            <h3 class="h4 mb-3">Barba Completa</h3>
+            <p class="mb-0">Aparo, desenho e tratamento para manter sua barba impecável.</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-4">
+        <div class="card h-100 border-secondary bg-gray-800">
+          <div class="card-body text-center p-4">
+            <div class="mb-3">
+              <i class="fas fa-spa fa-3x text-primary"></i>
+            </div>
+            <h3 class="h4 mb-3">Tratamentos</h3>
+            <p class="mb-0">Hidratação, revitalização e outros cuidados especiais para cabelo e barba.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Sobre Nós  -->
+<section class="about-section py-5 bg-gray-800 rounded-3 my-4">
+  <div class="container py-4">
+    <div class="row">
+      <div class="col-lg-8 mx-auto">
+        
+        <!-- Cabeçalho -->
+        <div class="text-center mb-5">
+          <h2 class="fw-bold display-5">
+            Sobre a <span class="text-primary">BarberShop</span>
+          </h2>
+        </div>
+        
+        <!-- Conteúdo principal -->
+        <div class="px-lg-5">
+          <p class="lead text-center mb-5 text-light">
+            Fundada em 2010, a BarberShop se tornou referência em cuidados masculinos, combinando técnicas tradicionais com as últimas tendências.
+          </p>
+          
+          <!-- Itens em grid -->
+          <div class="row g-4">
+            <div class="col-md-6">
+              <div class="d-flex">
+                <div class="me-3 text-primary">
+                  <i class="fas fa-certificate fa-2x"></i>
+                </div>
+                <div>
+                  <h4 class="h5 text-light">Profissionais Certificados</h4>
+                  <p class="small text-light" style="opacity: 0.8;">Equipe especializada e constantemente treinada</p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-md-6">
+              <div class="d-flex">
+                <div class="me-3 text-primary">
+                  <i class="fas fa-flask fa-2x"></i>
+                </div>
+                <div>
+                  <h4 class="h5 text-light">Produtos Premium</h4>
+                  <p class="small text-light" style="opacity: 0.8;">As melhores marcas do mercado</p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-md-6">
+              <div class="d-flex">
+                <div class="me-3 text-primary">
+                  <i class="fas fa-shield-alt fa-2x"></i>
+                </div>
+                <div>
+                  <h4 class="h5 text-light">Ambiente Seguro</h4>
+                  <p class="small text-light" style="opacity: 0.8;">Protocolos rigorosos de higiene</p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-md-6">
+              <div class="d-flex">
+                <div class="me-3 text-primary">
+                  <i class="fas fa-user-tie fa-2x"></i>
+                </div>
+                <div>
+                  <h4 class="h5 text-light">Atendimento Personalizado</h4>
+                  <p class="small text-light" style="opacity: 0.8;">Soluções sob medida para você</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+        
+      
+      <!-- Espaço vazio para balancear -->
+      <div class="col-lg-4"></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Final -->
+<section class="cta-section py-5 bg-dark">
+  <div class="container text-center py-4">
+    <h2 class="fw-bold mb-4">Pronto para sua transformação?</h2>
+    <p class="lead mb-4">Agende seu horário agora mesmo e experimente o melhor serviço de barbearia da região.</p>
+    <a href="/agendamento" class="btn btn-primary btn-lg px-5">Agendar Agora</a>
+  </div>
+</section>
+{% endblock %}
