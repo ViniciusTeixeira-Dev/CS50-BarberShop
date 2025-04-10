@@ -25,6 +25,7 @@
 6. Execute: `flask run`
 
 ----------------------------------------------------------------------
+# Barber Shop - Scheduling System ✂️
 
 ## 🇺🇸 English Version
 
